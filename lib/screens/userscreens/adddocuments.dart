@@ -41,6 +41,7 @@ class _AddDocumentState extends State<AddDocument> {
           10,
           false
         ]);
+        // [file,seleted,copies,color,binding type(0-Spiral,1-thermal,2-not required),price,TwoSide]
         print(fileNames);
         print(addedFiles);
         setState(() {});
@@ -211,7 +212,9 @@ class _AddDocumentState extends State<AddDocument> {
                                 child: Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: Container(
-                                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: height * 0.025),
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: 10,
+                                        vertical: height * 0.025),
                                     // height: height * 0.1,
                                     width: width * 0.9,
                                     decoration: BoxDecoration(
@@ -226,11 +229,13 @@ class _AddDocumentState extends State<AddDocument> {
                                       color: Color(0xffcc7947),
                                     ),
                                     child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: [
                                         Text(
-                                          fileNames[index-1],
+                                          fileNames[index - 1],
                                           style: TextStyle(
                                             color: Colors.white,
                                             fontSize: width * 0.05,
@@ -244,403 +249,399 @@ class _AddDocumentState extends State<AddDocument> {
                                                 context: context,
                                                 builder: (context) {
                                                   List data =
-                                                  addedFiles[index - 1];
+                                                      addedFiles[index - 1];
                                                   return StatefulBuilder(
                                                       builder:
                                                           (context, setState) {
-                                                        return Container(
-                                                          height: height * 0.8,
-                                                          width: width * 0.85,
-                                                          child: ClipRRect(
-                                                              borderRadius:
+                                                    return Container(
+                                                      height: height * 0.8,
+                                                      width: width * 0.85,
+                                                      child: ClipRRect(
+                                                          borderRadius:
                                                               BorderRadius
                                                                   .circular(20),
-                                                              child: Material(
-                                                                child: Padding(
-                                                                  padding:
+                                                          child: Material(
+                                                            child: Padding(
+                                                              padding:
                                                                   const EdgeInsets
-                                                                      .all(
+                                                                          .all(
                                                                       15.0),
-                                                                  child: Column(
-                                                                    children: [
-                                                                      Align(
-                                                                        alignment:
+                                                              child: Column(
+                                                                children: [
+                                                                  Align(
+                                                                    alignment:
                                                                         Alignment
                                                                             .centerLeft,
-                                                                        child: Row(
-                                                                          mainAxisAlignment:
+                                                                    child: Row(
+                                                                      mainAxisAlignment:
                                                                           MainAxisAlignment
                                                                               .start,
-                                                                          children: [
-                                                                            SizedBox(
-                                                                              width:
+                                                                      children: [
+                                                                        SizedBox(
+                                                                          width:
                                                                               20,
-                                                                            ),
-                                                                            Icon(
-                                                                              Icons
-                                                                                  .file_present,
-                                                                              color:
-                                                                              utils.majorColor,
-                                                                              size:
-                                                                              20,
-                                                                            ),
-                                                                            SizedBox(
-                                                                              width:
-                                                                              15,
-                                                                            ),
-                                                                            SizedBox(
-                                                                              width:
-                                                                              width * 0.6,
-                                                                              child:
-                                                                              Text(
-                                                                                fileNames[index -
-                                                                                    1],
-                                                                                style:
-                                                                                TextStyle(
-                                                                                  color: Colors.black,
-                                                                                  fontSize: width * 0.05,
-                                                                                  fontFamily: utils.font,
-                                                                                  fontWeight: FontWeight.w600,
-                                                                                ),
-                                                                              ),
-                                                                            )
-                                                                          ],
                                                                         ),
-                                                                      ),
-                                                                      Padding(
-                                                                        padding:
+                                                                        Icon(
+                                                                          Icons
+                                                                              .file_present,
+                                                                          color:
+                                                                              utils.majorColor,
+                                                                          size:
+                                                                              20,
+                                                                        ),
+                                                                        SizedBox(
+                                                                          width:
+                                                                              15,
+                                                                        ),
+                                                                        SizedBox(
+                                                                          width:
+                                                                              width * 0.6,
+                                                                          child:
+                                                                              Text(
+                                                                            fileNames[index -
+                                                                                1],
+                                                                            style:
+                                                                                TextStyle(
+                                                                              color: Colors.black,
+                                                                              fontSize: width * 0.05,
+                                                                              fontFamily: utils.font,
+                                                                              fontWeight: FontWeight.w600,
+                                                                            ),
+                                                                          ),
+                                                                        )
+                                                                      ],
+                                                                    ),
+                                                                  ),
+                                                                  Padding(
+                                                                    padding:
                                                                         const EdgeInsets.all(
                                                                             8.0),
-                                                                        child:
+                                                                    child:
                                                                         Container(
-                                                                          height:
+                                                                      height:
                                                                           height *
                                                                               0.4,
-                                                                          width:
+                                                                      width:
                                                                           width *
                                                                               0.8,
-                                                                          child: SfPdfViewer
-                                                                              .file(
+                                                                      child: SfPdfViewer
+                                                                          .file(
                                                                               data[0]),
-                                                                        ),
-                                                                      ),
-                                                                      Row(
-                                                                        mainAxisAlignment:
+                                                                    ),
+                                                                  ),
+                                                                  Row(
+                                                                    mainAxisAlignment:
                                                                         MainAxisAlignment
                                                                             .center,
-                                                                        children: [
-                                                                          SizedBox(
-                                                                            width: width *
-                                                                                0.8,
-                                                                            child:
+                                                                    children: [
+                                                                      SizedBox(
+                                                                        width: width *
+                                                                            0.8,
+                                                                        child:
                                                                             Column(
-                                                                              crossAxisAlignment:
+                                                                          crossAxisAlignment:
                                                                               CrossAxisAlignment.start,
-                                                                              children: [
-                                                                                Row(
-                                                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                                  children: [
-                                                                                    Text(
-                                                                                      "Quantity",
-                                                                                      style: TextStyle(
-                                                                                        color: Color(0xdd000000),
-                                                                                        fontSize: 14,
-                                                                                        fontFamily: utils.font,
-                                                                                        fontWeight: FontWeight.w600,
-                                                                                      ),
-                                                                                    ),
-                                                                                    Row(
-                                                                                      mainAxisAlignment: MainAxisAlignment.start,
-                                                                                      children: [
-                                                                                        IconButton(
-                                                                                          onPressed: () {
-                                                                                            if (data[2] > 0) {
-                                                                                              setState(() {
-                                                                                                data[2] = data[2] - 1;
-                                                                                                print(data[2]);
-                                                                                              });
-                                                                                            }
-                                                                                          },
-                                                                                          icon: SvgPicture.asset("assets/images/minus.svg"),
-                                                                                        ),
-                                                                                        Text(
-                                                                                          "${data[2]}",
-                                                                                          textAlign: TextAlign.center,
-                                                                                          style: TextStyle(
-                                                                                            color: Colors.black,
-                                                                                            fontSize: 16,
-                                                                                          ),
-                                                                                        ),
-                                                                                        IconButton(
-                                                                                          onPressed: () {
-                                                                                            setState(() {
-                                                                                              data[2] = data[2] + 1;
-                                                                                              print(data[2]);
-                                                                                            });
-                                                                                          },
-                                                                                          icon: SvgPicture.asset("assets/images/add.svg"),
-                                                                                        )
-                                                                                      ],
-                                                                                    ),
-                                                                                  ],
-                                                                                ),
-                                                                                Row(
-                                                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                                  children: [
-                                                                                    Text(
-                                                                                      "Colour",
-                                                                                      style: TextStyle(
-                                                                                        color: Color(0xdd000000),
-                                                                                        fontSize: 14,
-                                                                                        fontFamily: utils.font,
-                                                                                        fontWeight: FontWeight.w600,
-                                                                                      ),
-                                                                                    ),
-                                                                                    SizedBox(
-                                                                                        height:20
-                                                                                    ),
-                                                                                    Row(
-                                                                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                                      children: [
-                                                                                        Text(
-                                                                                          "No",
-                                                                                          textAlign: TextAlign.center,
-                                                                                          style: TextStyle(
-                                                                                            color: Colors.black,
-                                                                                            fontSize: 16,
-                                                                                          ),
-                                                                                        ),
-                                                                                        FlutterSwitch(
-                                                                                          width: 40,
-                                                                                          height: 30,
-                                                                                          activeColor: utils.majorColor,
-                                                                                          value: data[6],
-                                                                                          onToggle: (val) {
-                                                                                            setState(() {
-                                                                                              addedFiles[index - 1][6] = !addedFiles[index - 1][6];
-                                                                                            });
-                                                                                          },
-                                                                                        ),
-                                                                                        Text(
-                                                                                          "Yes",
-                                                                                          textAlign: TextAlign.center,
-                                                                                          style: TextStyle(
-                                                                                            color: Colors.black,
-                                                                                            fontSize: 16,
-                                                                                          ),
-                                                                                        ),
-                                                                                      ],
-                                                                                    ),
-                                                                                  ],
-                                                                                ),
-                                                                                SizedBox(
-                                                                                    height:20
-                                                                                ),
-                                                                                Row(
-                                                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                                  children: [
-                                                                                    Text(
-                                                                                      "One Side / two Side ",
-                                                                                      style: TextStyle(
-                                                                                        color: Color(0xdd000000),
-                                                                                        fontSize: 14,
-                                                                                        fontFamily: utils.font,
-                                                                                        fontWeight: FontWeight.w600,
-                                                                                      ),
-                                                                                    ),
-                                                                                    Row(
-                                                                                      mainAxisAlignment: MainAxisAlignment.start,
-                                                                                      children: [
-                                                                                        Text(
-                                                                                          "One",
-                                                                                          textAlign: TextAlign.center,
-                                                                                          style: TextStyle(
-                                                                                            color: Colors.black,
-                                                                                            fontSize: 16,
-                                                                                          ),
-                                                                                        ),
-                                                                                        FlutterSwitch(
-                                                                                          width: 40,
-                                                                                          height: 30,
-                                                                                          activeColor: utils.majorColor,
-                                                                                          value: addedFiles[index - 1][3],
-                                                                                          onToggle: (val) {
-                                                                                            setState(() {
-                                                                                              addedFiles[index - 1][3] = val;
-                                                                                            });
-                                                                                          },
-                                                                                        ),
-                                                                                        Text(
-                                                                                          "Two",
-                                                                                          textAlign: TextAlign.center,
-                                                                                          style: TextStyle(
-                                                                                            color: Colors.black,
-                                                                                            fontSize: 16,
-                                                                                          ),
-                                                                                        ),
-                                                                                      ],
-                                                                                    )
-                                                                                  ],
-                                                                                )
-                                                                              ],
-                                                                            ),
-                                                                          ),
-                                                                        ],
-                                                                      ),
-                                                                      Align(
-                                                                        alignment:
-                                                                        Alignment
-                                                                            .centerLeft,
-                                                                        child:
-                                                                        Padding(
-                                                                          padding: const EdgeInsets
-                                                                              .only(
-                                                                              left:
-                                                                              20),
-                                                                          child:
-                                                                          Text(
-                                                                            "Binding",
-                                                                            style:
-                                                                            TextStyle(
-                                                                              color:
-                                                                              Color(0xdd000000),
-                                                                              fontSize:
-                                                                              width * 0.05,
-                                                                              fontFamily:
-                                                                              utils.font,
-                                                                              fontWeight:
-                                                                              FontWeight.w700,
-                                                                            ),
-                                                                          ),
-                                                                        ),
-                                                                      ),
-                                                                      Padding(
-                                                                        padding:
-                                                                        EdgeInsets
-                                                                            .only(
-                                                                          left: width *
-                                                                              0.05,
-                                                                        ),
-                                                                        child:
-                                                                        Column(
                                                                           children: [
                                                                             Row(
+                                                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                                               children: [
-                                                                                IconButton(
-                                                                                    onPressed: () {
-                                                                                      data[4] = 0;
-                                                                                      setState(() {});
-                                                                                    },
-                                                                                    icon: Icon(
-                                                                                      data[4] == 0 ? Icons.check_circle : Icons.circle,
-                                                                                      color: data[4] == 0 ? utils.majorColor : Colors.grey,
-                                                                                    )),
                                                                                 Text(
-                                                                                  "Spiral",
+                                                                                  "Quantity",
                                                                                   style: TextStyle(
-                                                                                    color: Color(0xff212b36),
+                                                                                    color: Color(0xdd000000),
                                                                                     fontSize: 14,
+                                                                                    fontFamily: utils.font,
+                                                                                    fontWeight: FontWeight.w600,
                                                                                   ),
-                                                                                )
+                                                                                ),
+                                                                                Row(
+                                                                                  mainAxisAlignment: MainAxisAlignment.start,
+                                                                                  children: [
+                                                                                    IconButton(
+                                                                                      onPressed: () {
+                                                                                        if (data[2] > 0) {
+                                                                                          setState(() {
+                                                                                            data[2] = data[2] - 1;
+                                                                                            print(data[2]);
+                                                                                          });
+                                                                                        }
+                                                                                      },
+                                                                                      icon: SvgPicture.asset("assets/images/minus.svg"),
+                                                                                    ),
+                                                                                    Text(
+                                                                                      "${data[2]}",
+                                                                                      textAlign: TextAlign.center,
+                                                                                      style: TextStyle(
+                                                                                        color: Colors.black,
+                                                                                        fontSize: 16,
+                                                                                      ),
+                                                                                    ),
+                                                                                    IconButton(
+                                                                                      onPressed: () {
+                                                                                        setState(() {
+                                                                                          data[2] = data[2] + 1;
+                                                                                          print(data[2]);
+                                                                                        });
+                                                                                      },
+                                                                                      icon: SvgPicture.asset("assets/images/add.svg"),
+                                                                                    )
+                                                                                  ],
+                                                                                ),
                                                                               ],
                                                                             ),
                                                                             Row(
+                                                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                                               children: [
-                                                                                IconButton(
-                                                                                    onPressed: () {
-                                                                                      data[4] = 1;
-                                                                                      setState(() {});
-                                                                                    },
-                                                                                    icon: Icon(
-                                                                                      data[4] == 1 ? Icons.check_circle : Icons.circle,
-                                                                                      color: data[4] == 1 ? utils.majorColor : Colors.grey,
-                                                                                    )),
                                                                                 Text(
-                                                                                  "Thermal",
+                                                                                  "Colour",
                                                                                   style: TextStyle(
-                                                                                    color: Color(0xff212b36),
+                                                                                    color: Color(0xdd000000),
                                                                                     fontSize: 14,
+                                                                                    fontFamily: utils.font,
+                                                                                    fontWeight: FontWeight.w600,
                                                                                   ),
-                                                                                )
+                                                                                ),
+                                                                                SizedBox(height: 20),
+                                                                                Row(
+                                                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                                  children: [
+                                                                                    Text(
+                                                                                      "No",
+                                                                                      textAlign: TextAlign.center,
+                                                                                      style: TextStyle(
+                                                                                        color: Colors.black,
+                                                                                        fontSize: 16,
+                                                                                      ),
+                                                                                    ),
+                                                                                    FlutterSwitch(
+                                                                                      width: 40,
+                                                                                      height: 30,
+                                                                                      activeColor: utils.majorColor,
+                                                                                      value: data[6],
+                                                                                      onToggle: (val) {
+                                                                                        setState(() {
+                                                                                          addedFiles[index - 1][6] = !addedFiles[index - 1][6];
+                                                                                        });
+                                                                                      },
+                                                                                    ),
+                                                                                    Text(
+                                                                                      "Yes",
+                                                                                      textAlign: TextAlign.center,
+                                                                                      style: TextStyle(
+                                                                                        color: Colors.black,
+                                                                                        fontSize: 16,
+                                                                                      ),
+                                                                                    ),
+                                                                                  ],
+                                                                                ),
                                                                               ],
                                                                             ),
+                                                                            SizedBox(height: 20),
                                                                             Row(
+                                                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                                               children: [
-                                                                                IconButton(
-                                                                                    onPressed: () {
-                                                                                      data[4] = 2;
-                                                                                      setState(() {});
-                                                                                    },
-                                                                                    icon: Icon(
-                                                                                      data[4] == 2 ? Icons.check_circle : Icons.circle,
-                                                                                      color: data[4] == 2 ? utils.majorColor : Colors.grey,
-                                                                                    )),
                                                                                 Text(
-                                                                                  "Not required",
+                                                                                  "One Side / two Side ",
                                                                                   style: TextStyle(
-                                                                                    color: Color(0xff212b36),
+                                                                                    color: Color(0xdd000000),
                                                                                     fontSize: 14,
+                                                                                    fontFamily: utils.font,
+                                                                                    fontWeight: FontWeight.w600,
                                                                                   ),
+                                                                                ),
+                                                                                Row(
+                                                                                  mainAxisAlignment: MainAxisAlignment.start,
+                                                                                  children: [
+                                                                                    Text(
+                                                                                      "One",
+                                                                                      textAlign: TextAlign.center,
+                                                                                      style: TextStyle(
+                                                                                        color: Colors.black,
+                                                                                        fontSize: 16,
+                                                                                      ),
+                                                                                    ),
+                                                                                    FlutterSwitch(
+                                                                                      width: 40,
+                                                                                      height: 30,
+                                                                                      activeColor: utils.majorColor,
+                                                                                      value: addedFiles[index - 1][3],
+                                                                                      onToggle: (val) {
+                                                                                        setState(() {
+                                                                                          addedFiles[index - 1][3] = val;
+                                                                                        });
+                                                                                      },
+                                                                                    ),
+                                                                                    Text(
+                                                                                      "Two",
+                                                                                      textAlign: TextAlign.center,
+                                                                                      style: TextStyle(
+                                                                                        color: Colors.black,
+                                                                                        fontSize: 16,
+                                                                                      ),
+                                                                                    ),
+                                                                                  ],
                                                                                 )
                                                                               ],
                                                                             )
                                                                           ],
                                                                         ),
                                                                       ),
-                                                                      Align(
-                                                                        alignment:
+                                                                    ],
+                                                                  ),
+                                                                  Align(
+                                                                    alignment:
+                                                                        Alignment
+                                                                            .centerLeft,
+                                                                    child:
+                                                                        Padding(
+                                                                      padding: const EdgeInsets
+                                                                              .only(
+                                                                          left:
+                                                                              20),
+                                                                      child:
+                                                                          Text(
+                                                                        "Binding",
+                                                                        style:
+                                                                            TextStyle(
+                                                                          color:
+                                                                              Color(0xdd000000),
+                                                                          fontSize:
+                                                                              width * 0.05,
+                                                                          fontFamily:
+                                                                              utils.font,
+                                                                          fontWeight:
+                                                                              FontWeight.w700,
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                  Padding(
+                                                                    padding:
+                                                                        EdgeInsets
+                                                                            .only(
+                                                                      left: width *
+                                                                          0.05,
+                                                                    ),
+                                                                    child:
+                                                                        Column(
+                                                                      children: [
+                                                                        Row(
+                                                                          children: [
+                                                                            IconButton(
+                                                                                onPressed: () {
+                                                                                  data[4] = 0;
+                                                                                  setState(() {});
+                                                                                },
+                                                                                icon: Icon(
+                                                                                  data[4] == 0 ? Icons.check_circle : Icons.circle,
+                                                                                  color: data[4] == 0 ? utils.majorColor : Colors.grey,
+                                                                                )),
+                                                                            Text(
+                                                                              "Spiral",
+                                                                              style: TextStyle(
+                                                                                color: Color(0xff212b36),
+                                                                                fontSize: 14,
+                                                                              ),
+                                                                            )
+                                                                          ],
+                                                                        ),
+                                                                        Row(
+                                                                          children: [
+                                                                            IconButton(
+                                                                                onPressed: () {
+                                                                                  data[4] = 1;
+                                                                                  setState(() {});
+                                                                                },
+                                                                                icon: Icon(
+                                                                                  data[4] == 1 ? Icons.check_circle : Icons.circle,
+                                                                                  color: data[4] == 1 ? utils.majorColor : Colors.grey,
+                                                                                )),
+                                                                            Text(
+                                                                              "Thermal",
+                                                                              style: TextStyle(
+                                                                                color: Color(0xff212b36),
+                                                                                fontSize: 14,
+                                                                              ),
+                                                                            )
+                                                                          ],
+                                                                        ),
+                                                                        Row(
+                                                                          children: [
+                                                                            IconButton(
+                                                                                onPressed: () {
+                                                                                  data[4] = 2;
+                                                                                  setState(() {});
+                                                                                },
+                                                                                icon: Icon(
+                                                                                  data[4] == 2 ? Icons.check_circle : Icons.circle,
+                                                                                  color: data[4] == 2 ? utils.majorColor : Colors.grey,
+                                                                                )),
+                                                                            Text(
+                                                                              "Not required",
+                                                                              style: TextStyle(
+                                                                                color: Color(0xff212b36),
+                                                                                fontSize: 14,
+                                                                              ),
+                                                                            )
+                                                                          ],
+                                                                        )
+                                                                      ],
+                                                                    ),
+                                                                  ),
+                                                                  Align(
+                                                                    alignment:
                                                                         FractionalOffset
                                                                             .bottomCenter,
-                                                                        child:
+                                                                    child:
                                                                         Container(
-                                                                          width:
+                                                                      width:
                                                                           width *
                                                                               0.9,
-                                                                          height:
+                                                                      height:
                                                                           36,
-                                                                          decoration:
+                                                                      decoration:
                                                                           BoxDecoration(
-                                                                            borderRadius:
+                                                                        borderRadius:
                                                                             BorderRadius.circular(4),
-                                                                            color: utils
-                                                                                .majorColor,
-                                                                          ),
-                                                                          child:
+                                                                        color: utils
+                                                                            .majorColor,
+                                                                      ),
+                                                                      child:
                                                                           ClipRRect(
-                                                                            borderRadius:
+                                                                        borderRadius:
                                                                             BorderRadius.circular(4),
-                                                                            child:
+                                                                        child:
                                                                             MaterialButton(
-                                                                              onPressed:
-                                                                                  () {
-                                                                                setState(() {
-                                                                                  addedFiles[index - 1] = data;
-                                                                                });
-                                                                                Navigator.pop(context);
-                                                                              },
-                                                                              child:
+                                                                          onPressed:
+                                                                              () {
+                                                                            setState(() {
+                                                                              addedFiles[index - 1] = data;
+                                                                            });
+                                                                            Navigator.pop(context);
+                                                                          },
+                                                                          child:
                                                                               Center(
-                                                                                child:
+                                                                            child:
                                                                                 Text(
-                                                                                  "OKAY",
-                                                                                  style: TextStyle(
-                                                                                    color: Colors.white,
-                                                                                    fontSize: width * 0.04,
-                                                                                    fontFamily: utils.font,
-                                                                                    fontWeight: FontWeight.w900,
-                                                                                  ),
-                                                                                ),
+                                                                              "OKAY",
+                                                                              style: TextStyle(
+                                                                                color: Colors.white,
+                                                                                fontSize: width * 0.04,
+                                                                                fontFamily: utils.font,
+                                                                                fontWeight: FontWeight.w900,
                                                                               ),
                                                                             ),
                                                                           ),
                                                                         ),
-                                                                      )
-                                                                    ],
-                                                                  ),
-                                                                ),
-                                                              )),
-                                                        );
-                                                      });
+                                                                      ),
+                                                                    ),
+                                                                  )
+                                                                ],
+                                                              ),
+                                                            ),
+                                                          )),
+                                                    );
+                                                  });
                                                 });
                                             print("hello");
                                           },
@@ -658,7 +659,6 @@ class _AddDocumentState extends State<AddDocument> {
                                     ),
                                   ),
                                 )),
-
                           )
                         : ClipRRect(
                             borderRadius: BorderRadius.circular(4),
@@ -881,9 +881,7 @@ class _AddDocumentState extends State<AddDocument> {
                                                                                     fontWeight: FontWeight.w600,
                                                                                   ),
                                                                                 ),
-                                                                                SizedBox(
-                                                                                    height:20
-                                                                                ),
+                                                                                SizedBox(height: 20),
                                                                                 Row(
                                                                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                                                   children: [
@@ -918,9 +916,7 @@ class _AddDocumentState extends State<AddDocument> {
                                                                                 ),
                                                                               ],
                                                                             ),
-                                                                            SizedBox(
-                                                                              height:20
-                                                                            ),
+                                                                            SizedBox(height: 20),
                                                                             Row(
                                                                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                                               children: [
