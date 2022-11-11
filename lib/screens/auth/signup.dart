@@ -19,7 +19,85 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
-  TextEditingController email = TextEditingController();
+  var otp = null;
+  var id;
+  bool login = false;
+  Future registerUser(String mobile, BuildContext context) async {
+    FirebaseAuth _auth = FirebaseAuth.instance;
+
+    await _auth.verifyPhoneNumber(
+      phoneNumber: "+91 $mobile",
+      verificationCompleted: (PhoneAuthCredential credential) {
+        print("success");
+      },
+      verificationFailed: (FirebaseAuthException e) {
+        if (e.code == "invalid-phone-number") {
+          showDialog(
+              context: context,
+              builder: (context) {
+                return Center(
+                  child: Container(
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(15)),
+                    width: 300,
+                    height: 300,
+                    child: Material(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(15.0),
+                            child: SizedBox(
+                              width: 270,
+                              child: Center(
+                                child: Text(
+                                  "Please enter the phone number",
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w500,
+                                    fontFamily: utils.font,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(4),
+                            child: MaterialButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                child: SubmitButton(
+                                  name: 'okay',
+                                )),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                );
+              });
+        }
+        print("failed$e");
+      },
+      codeSent: (String verificationId, int? resendToken) async {
+        setState(() {
+          login = true;
+          id = verificationId;
+        });
+
+        print(id);
+
+        // Sign the user in (or link) with the credential
+      },
+      codeAutoRetrievalTimeout: (String verificationId) {
+        print("timeout");
+      },
+    );
+  }
+
+  TextEditingController phoneNumber = TextEditingController();
   TextEditingController username = TextEditingController();
   TextEditingController rollnumber = TextEditingController();
   TextEditingController password = TextEditingController();
@@ -162,8 +240,42 @@ class _SignUpState extends State<SignUp> {
                       SizedBox(
                         width: width * 0.75,
                         child: TextFormField(
-                          controller: email,
+                          style: TextStyle(
+                              fontSize: width * 0.03, color: Colors.black),
+                          controller: phoneNumber,
+                          onEditingComplete: () {
+                            print("submit");
+                            registerUser(phoneNumber.text, context);
+                          },
+                          onSaved: (e) {
+                            print("submit");
+
+                            registerUser(phoneNumber.text, context);
+                          },
+                          onFieldSubmitted: (e) {
+                            print("submit");
+
+                            registerUser(phoneNumber.text, context);
+                          },
+                          validator: MultiValidator([
+                            RequiredValidator(
+                                errorText: "This field is required"),
+                            MinLengthValidator(10,
+                                errorText: "enter valid phone number")
+                          ]),
+                          keyboardType: TextInputType.number,
                           decoration: InputDecoration(
+                            suffix: login
+                                ? Text(
+                                    "✓",
+                                    style: TextStyle(color: Colors.green),
+                                  )
+                                : Text(""),
+                            prefix: Text(
+                              "+91 ",
+                              style: TextStyle(
+                                  fontSize: width * 0.03, color: Colors.black),
+                            ),
                             focusedBorder: OutlineInputBorder(
                               borderSide: BorderSide(
                                 color: utils.majorColor,
@@ -172,12 +284,12 @@ class _SignUpState extends State<SignUp> {
                             ),
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(4)),
-                            labelText: 'Email',
+                            labelText: 'Phone Number',
                             labelStyle: TextStyle(
                               color: Color(0xffcc7947),
                               fontSize: width * 0.03,
                             ),
-                            hintText: "Email Address",
+                            hintText: "Phone Number",
                             hintStyle: TextStyle(
                               color: Color(0x89000000),
                               fontSize: width * 0.03,
@@ -191,12 +303,13 @@ class _SignUpState extends State<SignUp> {
                       SizedBox(
                         width: width * 0.75,
                         child: TextFormField(
+                          keyboardType: TextInputType.number,
+                          enabled: login,
                           controller: password,
                           validator: MultiValidator([
                             RequiredValidator(
                                 errorText: "This field is required"),
-                            MinLengthValidator(8,
-                                errorText: "This password is too shorter")
+                            MinLengthValidator(6, errorText: "enter valid OTP")
                           ]),
                           obscureText: isPassword,
                           decoration: InputDecoration(
@@ -222,12 +335,12 @@ class _SignUpState extends State<SignUp> {
                             ),
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(4)),
-                            labelText: 'Password',
+                            labelText: 'OTP',
                             labelStyle: TextStyle(
                               color: Color(0xffcc7947),
                               fontSize: width * 0.03,
                             ),
-                            hintText: "Password",
+                            hintText: "OTP",
                             hintStyle: TextStyle(
                               color: Color(0x89000000),
                               fontSize: width * 0.03,
@@ -241,143 +354,42 @@ class _SignUpState extends State<SignUp> {
                       ClipRRect(
                         borderRadius: BorderRadius.circular(4),
                         child: MaterialButton(
+                          enableFeedback: login,
                           onPressed: (() {
                             if (_formKey.currentState!.validate()) {
+                              showDialog(
+                                  barrierDismissible: false,
+                                  context: context,
+                                  builder: (context) {
+                                    return Center(
+                                      child: CircularProgressIndicator(
+                                        color: utils.majorColor,
+                                      ),
+                                    );
+                                  });
+                              PhoneAuthCredential authCred =
+                                  PhoneAuthProvider.credential(
+                                      verificationId: id,
+                                      smsCode: password.text);
                               FirebaseAuth.instance
-                                  .createUserWithEmailAndPassword(
-                                      email: email.text,
-                                      password: password.text)
-                                  .then((value) => FirebaseFirestore.instance
-                                          .collection("users")
-                                          .doc(FirebaseAuth
-                                              .instance.currentUser!.uid)
-                                          .set({
-                                        'name': username.text,
-                                        'rollNumber': rollnumber.text,
-                                        'email': email.text,
-                                        'admin': false,
-                                      }))
-                                  .then((value) async {
+                                  .signInWithCredential(authCred)
+                                  .then((value) {
                                 FirebaseFirestore.instance
-                                    .collection('users')
+                                    .collection("users")
                                     .doc(FirebaseAuth.instance.currentUser!.uid)
-                                    .collection('registrations');
-                                Navigator.pop(context);
+                                    .set({
+                                  "name": username.text,
+                                  "profileImage":
+                                      "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
+                                  "rollNumber": rollnumber.text,
+                                  "number": phoneNumber.text,
+                                  "admin": false
+                                });
                                 Navigator.pushAndRemoveUntil(
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) => HomeScreen()),
                                     (route) => false);
-                              }).catchError((onError) {
-                                print(onError.code);
-                                if (onError.code == 'email-already-in-use') {
-                                  Navigator.pop(context);
-                                  showDialog(
-                                      context: context,
-                                      builder: (contex) {
-                                        return Stack(
-                                          children: [
-                                            Center(
-                                                child: ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
-                                              child: Material(
-                                                child: Container(
-                                                  height: height * 0.3,
-                                                  width: width * 0.8,
-                                                  child: Column(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .center,
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .center,
-                                                    children: [
-                                                      Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .all(8.0),
-                                                        child: Text(
-                                                          'This email already exists..\n Please login',
-                                                          textAlign:
-                                                              TextAlign.center,
-                                                          style: TextStyle(
-                                                            color: Colors.black,
-                                                            fontSize:
-                                                                width * 0.04,
-                                                            fontFamily:
-                                                                "Urbanist",
-                                                            fontWeight:
-                                                                FontWeight.w600,
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      Container(
-                                                        width: width * 0.2,
-                                                        height: 56,
-                                                        decoration:
-                                                            BoxDecoration(
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(8),
-                                                          color:
-                                                              Color(0xff1e232c),
-                                                        ),
-                                                        child: Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                  .all(8.0),
-                                                          child: ClipRRect(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        8),
-                                                            child:
-                                                                MaterialButton(
-                                                              onPressed: (() {
-                                                                Navigator.pushAndRemoveUntil(
-                                                                    context,
-                                                                    MaterialPageRoute(
-                                                                        builder:
-                                                                            (context) =>
-                                                                                LoginScreen()),
-                                                                    (route) =>
-                                                                        false);
-                                                              }),
-                                                              child: Center(
-                                                                child: Text(
-                                                                  "Login",
-                                                                  textAlign:
-                                                                      TextAlign
-                                                                          .center,
-                                                                  style:
-                                                                      TextStyle(
-                                                                    color: Colors
-                                                                        .white,
-                                                                    fontSize:
-                                                                        width *
-                                                                            0.04,
-                                                                    fontFamily:
-                                                                        "Urbanist",
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w600,
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                              ),
-                                            )),
-                                          ],
-                                        );
-                                      });
-                                }
                               });
                             }
                           }),

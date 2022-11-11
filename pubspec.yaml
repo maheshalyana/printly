@@ -47,7 +47,11 @@ dependencies:
   shared_preferences:
   syncfusion_flutter_pdfviewer:
   flutter_switch:
-
+  razorpay_flutter:
+  flutter_launcher_icons:
+flutter_icons:
+  android: "launcher_icon"
+  image_path: "assets/images/logo.png"
 
 dev_dependencies:
   flutter_test:

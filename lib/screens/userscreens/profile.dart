@@ -1,10 +1,16 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:pdf_render/pdf_render_widgets.dart';
 import 'package:printly/screens/auth/login.dart';
 import 'package:printly/utils/utils.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../widgets/filetile.dart';
 import 'menu.dart';
 
@@ -17,6 +23,60 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
+  void pickFile() async {
+    FilePickerResult?
+    result;
+    try {
+      result = await FilePicker
+          .platform
+          .pickFiles(
+          type: FileType
+              .custom,
+          allowMultiple: false,
+          allowedExtensions: [
+            'jpeg',
+            'jpg',
+            'png'
+          ]);
+    } catch (e) {
+      print(e);
+    }
+    if (result != null) {
+      SharedPreferences
+      pref =
+      await SharedPreferences
+          .getInstance();
+      String? number =
+      pref.getString(
+          'number');
+      String? rollNumber =
+      pref.getString(
+          'rollNumber');
+      File? file = File(
+          result.files
+              .first.path
+              .toString());
+      final ref = FirebaseStorage
+          .instance
+          .ref()
+          .child(
+          "userProfiles")
+          .child(
+          rollNumber!);
+      await ref
+          .putFile(file);
+      String imageUrl =
+      await ref
+          .getDownloadURL();
+      FirebaseFirestore
+          .instance
+          .collection("users").doc(FirebaseAuth.instance.currentUser!.uid)
+          .update({
+        "profileImage":
+        imageUrl
+      });
+    }
+  }
   @override
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
@@ -107,11 +167,19 @@ class _ProfileState extends State<Profile> {
                                                     padding:
                                                         const EdgeInsets.all(
                                                             8.0),
-                                                    child: Image.asset(
-                                                      'assets/images/profile.png',
-                                                      height: 150,
-                                                      width: 150,
-                                                      fit: BoxFit.contain,
+                                                    child: GestureDetector(
+                                                      onTap: () {
+
+
+                                                        pickFile();
+                                                      },
+                                                      child: Image.network(
+                                                        snapShot.data!.get(
+                                                            "profileImage"),
+                                                        height: 150,
+                                                        width: 150,
+                                                        fit: BoxFit.contain,
+                                                      ),
                                                     ),
                                                   ),
                                                   Padding(
@@ -132,8 +200,19 @@ class _ProfileState extends State<Profile> {
                                                       ),
                                                     ),
                                                   ),
+                                                  // Text(
+                                                  //   snapShot.data!.get('email'),
+                                                  //   style: TextStyle(
+                                                  //     color: Color(0x89000000),
+                                                  //     fontSize: width * 0.03,
+                                                  //     fontFamily: utils.font,
+                                                  //     fontWeight:
+                                                  //         FontWeight.w900,
+                                                  //   ),
+                                                  // ),
                                                   Text(
-                                                    snapShot.data!.get('email'),
+                                                    snapShot.data!
+                                                        .get('number'),
                                                     style: TextStyle(
                                                       color: Color(0x89000000),
                                                       fontSize: width * 0.03,
@@ -142,16 +221,6 @@ class _ProfileState extends State<Profile> {
                                                           FontWeight.w900,
                                                     ),
                                                   ),
-                                                  // Text(
-                                                  //   snapShot.data!
-                                                  //       .get('mobileNumber'),
-                                                  //   style: TextStyle(
-                                                  //     color: Color(0x89000000),
-                                                  //     fontSize: width * 0.03,
-                                                  //     fontFamily: utils.font,
-                                                  //     fontWeight: FontWeight.w900,
-                                                  //   ),
-                                                  // ),
                                                   SizedBox(
                                                     height: 30,
                                                   ),

@@ -51,6 +51,12 @@ class _AddDocumentState extends State<AddDocument> {
     }
   }
 
+  void set(){
+    setState(() {
+
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
@@ -197,14 +203,22 @@ class _AddDocumentState extends State<AddDocument> {
                                           );
                                         });
                                     addedFiles[index - 1][1] = false;
-                                    selectedFiles.remove([
-                                      addedFiles[index - 1][0],
-                                      addedFiles[index - 1][2],
-                                      addedFiles[index - 1][3],
-                                      addedFiles[index - 1][4],
-                                      addedFiles[index - 1][5],
-                                      addedFiles[index - 1][6],
-                                    ]);
+                                    // try{
+                                    //   selectedFiles.remove([
+                                    //     addedFiles[index - 1][0],
+                                    //     addedFiles[index - 1][2],
+                                    //     addedFiles[index - 1][3],
+                                    //     addedFiles[index - 1][4],
+                                    //     addedFiles[index - 1][5],
+                                    //     addedFiles[index - 1][6],
+                                    //   ]);
+                                    // }catch(e){
+                                    //   print(e);
+                                    //   print("No");
+                                    // }
+
+                                    set();
+                                    print(addedFiles);
                                     print(selectedFiles);
                                     Navigator.pop(context);
                                   });
@@ -676,14 +690,14 @@ class _AddDocumentState extends State<AddDocument> {
                                           );
                                         });
                                     addedFiles[index - 1][1] = true;
-                                    selectedFiles.add([
-                                      addedFiles[index - 1][0],
-                                      addedFiles[index - 1][2],
-                                      addedFiles[index - 1][3],
-                                      addedFiles[index - 1][4],
-                                      addedFiles[index - 1][5],
-                                      addedFiles[index - 1][6],
-                                    ]);
+                                    // selectedFiles.add([
+                                    //   addedFiles[index - 1][0],
+                                    //   addedFiles[index - 1][2],
+                                    //   addedFiles[index - 1][3],
+                                    //   addedFiles[index - 1][4],
+                                    //   addedFiles[index - 1][5],
+                                    //   addedFiles[index - 1][6],
+                                    // ]);
                                     print(selectedFiles);
                                     Navigator.pop(context);
                                   });
@@ -1157,6 +1171,19 @@ class _AddDocumentState extends State<AddDocument> {
                   borderRadius: BorderRadius.circular(4),
                   child: MaterialButton(
                     onPressed: () {
+                      selectedFiles = [];
+                      for(int i=0;i<addedFiles.length;i++){
+                       if(addedFiles[i][1]){
+                         selectedFiles.add([
+                           addedFiles[i][0],
+                           addedFiles[i][2],
+                           addedFiles[i][3],
+                           addedFiles[i][4],
+                           addedFiles[i][5],
+                           addedFiles[i][6],
+                         ]);
+                       }
+                      }
                       Navigator.pushAndRemoveUntil(
                           context,
                           MaterialPageRoute(
@@ -1167,7 +1194,7 @@ class _AddDocumentState extends State<AddDocument> {
                     },
                     child: Center(
                       child: Text(
-                        "PROCCED",
+                        "PROCEED",
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: width * 0.04,

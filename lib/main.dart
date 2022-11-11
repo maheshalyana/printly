@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:printly/screens/userscreens/homescreen.dart';
 import 'screens/auth/login.dart';
+import 'screens/auth/signup.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -32,7 +33,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: FirebaseAuth.instance.currentUser == null
-          ? LoginScreen()
+          ? SignUp()
           : HomeScreen(),
     );
   }

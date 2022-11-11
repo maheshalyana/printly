@@ -1,7 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:printly/screens/auth/login.dart';
 import 'package:printly/screens/userscreens/homescreen.dart';
 import 'package:printly/utils/utils.dart';
 
@@ -59,15 +62,24 @@ class _MenuState extends State<Menu> {
                             ),
                           ],
                         ),
-                        Text(
-                          "Hi,\nMahesh",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: width * 0.1,
-                            fontFamily: utils.font,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
+                        StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
+                            stream: FirebaseFirestore.instance
+                                .collection('users')
+                                .doc(FirebaseAuth.instance.currentUser!.uid)
+                                .snapshots(),
+                            builder: (context, snapshot) {
+                              return Text(
+                                snapshot.hasData
+                                    ? "Hi,\n${snapshot.data!.get("name")}"
+                                    : "Hi",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: width * 0.1,
+                                  fontFamily: utils.font,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              );
+                            }),
                         SizedBox(
                           height: height * 0.05,
                         ),
@@ -98,7 +110,7 @@ class _MenuState extends State<Menu> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => MyOrders()),
-                                    (route) => true);
+                                (route) => true);
                           }),
                           child: Text(
                             "My Orders",
@@ -201,7 +213,15 @@ class _MenuState extends State<Menu> {
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(4),
                       child: MaterialButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          FirebaseAuth.instance.signOut().then((e) {
+                            Navigator.pushAndRemoveUntil(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => LoginScreen()),
+                                (route) => false);
+                          });
+                        },
                         child: Center(
                           child: Text(
                             "LOG OUT",
