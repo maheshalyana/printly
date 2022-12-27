@@ -260,8 +260,9 @@ class _AddDocumentState extends State<AddDocument> {
                                             ),
                                           ),
                                     Padding(
-                                      padding: const EdgeInsets.all(8.0),
+                                      padding: const EdgeInsets.all(10.0),
                                       child: Container(
+                                        width: width * 0.6,
                                         child: Column(
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
@@ -272,7 +273,7 @@ class _AddDocumentState extends State<AddDocument> {
                                               fileNames[index - 1],
                                               style: TextStyle(
                                                 color: Colors.black,
-                                                fontSize: width * 0.05,
+                                                fontSize: width * 0.04,
                                                 fontFamily: "Urbanist",
                                                 fontWeight: FontWeight.w700,
                                               ),
@@ -305,37 +306,31 @@ class _AddDocumentState extends State<AddDocument> {
                                                                     children: [
                                                                       Align(
                                                                         alignment:
-                                                                            Alignment
-                                                                                .centerLeft,
+                                                                            Alignment.centerLeft,
                                                                         child:
                                                                             Row(
                                                                           mainAxisAlignment:
                                                                               MainAxisAlignment.start,
                                                                           children: [
                                                                             SizedBox(
-                                                                              width:
-                                                                                  20,
+                                                                              width: 20,
                                                                             ),
                                                                             Icon(
                                                                               Icons.file_present,
-                                                                              color:
-                                                                                  utils.majorColor,
-                                                                              size:
-                                                                                  20,
+                                                                              color: utils.majorColor,
+                                                                              size: 20,
                                                                             ),
                                                                             SizedBox(
-                                                                              width:
-                                                                                  15,
+                                                                              width: 15,
                                                                             ),
                                                                             SizedBox(
-                                                                              width:
-                                                                                  width * 0.6,
-                                                                              child:
-                                                                                  Text(
+                                                                              width: width * 0.6,
+                                                                              height: 50,
+                                                                              child: Text(
                                                                                 fileNames[index - 1],
                                                                                 style: TextStyle(
                                                                                   color: Colors.black,
-                                                                                  fontSize: width * 0.05,
+                                                                                  // fontSize: width * 0.05,
                                                                                   fontFamily: utils.font,
                                                                                   fontWeight: FontWeight.w600,
                                                                                 ),
@@ -346,30 +341,27 @@ class _AddDocumentState extends State<AddDocument> {
                                                                       ),
                                                                       Padding(
                                                                         padding:
-                                                                            const EdgeInsets.all(
-                                                                                8.0),
+                                                                            const EdgeInsets.all(8.0),
                                                                         child:
                                                                             Container(
-                                                                          height: height *
-                                                                              0.4,
-                                                                          width: width *
-                                                                              0.8,
-                                                                          child: SfPdfViewer.file(
-                                                                              data[0]),
+                                                                          height:
+                                                                              height * 0.4,
+                                                                          width:
+                                                                              width * 0.8,
+                                                                          child:
+                                                                              SfPdfViewer.file(data[0]),
                                                                         ),
                                                                       ),
                                                                       Row(
                                                                         mainAxisAlignment:
-                                                                            MainAxisAlignment
-                                                                                .center,
+                                                                            MainAxisAlignment.center,
                                                                         children: [
                                                                           SizedBox(
                                                                             width:
                                                                                 width * 0.8,
                                                                             child:
                                                                                 Column(
-                                                                              crossAxisAlignment:
-                                                                                  CrossAxisAlignment.start,
+                                                                              crossAxisAlignment: CrossAxisAlignment.start,
                                                                               children: [
                                                                                 Row(
                                                                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -445,31 +437,30 @@ class _AddDocumentState extends State<AddDocument> {
                                                                                         Padding(
                                                                                           padding: const EdgeInsets.all(8.0),
                                                                                           child: GestureDetector(
-                                                                                            onTap: (){
+                                                                                            onTap: () {
                                                                                               setState(() {
-                                                                                                data[6] = !data[6];
+                                                                                                addedFiles[index - 1][6] = !addedFiles[index - 1][6];
                                                                                               });
                                                                                             },
                                                                                             child: Container(
-                                                                                              height: 50,
-                                                                                             width:60,
-                                                                                             child: Stack(
-                                                                                               alignment: Alignment.center,
+                                                                                              height: 30,
+                                                                                              width: 60,
+                                                                                              child: Stack(
+                                                                                                alignment: Alignment.center,
                                                                                                 children: [
                                                                                                   Positioned(
-
-                                                                                                    right:10,
+                                                                                                    right: 10,
                                                                                                     child: Container(
                                                                                                       width: 34,
                                                                                                       height: 20,
                                                                                                       decoration: BoxDecoration(
                                                                                                         borderRadius: BorderRadius.circular(10),
-                                                                                                        color:  data[6] ? utils.majorColor : Color(0x1e000000),
+                                                                                                        color: addedFiles[index - 1][6] ? utils.majorColor : Color(0x1e000000),
                                                                                                       ),
                                                                                                     ),
                                                                                                   ),
                                                                                                   AnimatedPositioned(
-                                                                                                    right: data[6] ? -0 : 28 ,
+                                                                                                      right: addedFiles[index - 1][6] ? -0 : 28,
                                                                                                       duration: Duration(milliseconds: 100),
                                                                                                       child: Container(
                                                                                                         width: 25,
@@ -493,7 +484,7 @@ class _AddDocumentState extends State<AddDocument> {
                                                                                                               offset: Offset(0, 3),
                                                                                                             ),
                                                                                                           ],
-                                                                                                          color: data[6] ? utils.majorColor : Color(0xffbdbdbd),
+                                                                                                          color: addedFiles[index - 1][6] ? utils.majorColor : Color(0xffbdbdbd),
                                                                                                         ),
                                                                                                       ))
                                                                                                 ],
@@ -501,7 +492,6 @@ class _AddDocumentState extends State<AddDocument> {
                                                                                             ),
                                                                                           ),
                                                                                         ),
-
                                                                                         Text(
                                                                                           "Yes",
                                                                                           textAlign: TextAlign.center,
@@ -514,7 +504,7 @@ class _AddDocumentState extends State<AddDocument> {
                                                                                     ),
                                                                                   ],
                                                                                 ),
-                                                                                SizedBox(height: 20),
+                                                                                // SizedBox(height: 20),
                                                                                 Row(
                                                                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                                                   children: [
@@ -541,31 +531,30 @@ class _AddDocumentState extends State<AddDocument> {
                                                                                         Padding(
                                                                                           padding: const EdgeInsets.all(8.0),
                                                                                           child: GestureDetector(
-                                                                                            onTap: (){
+                                                                                            onTap: () {
                                                                                               setState(() {
-                                                                                                data[3] = !data[3];
+                                                                                                addedFiles[index - 1][3] = !addedFiles[index - 1][3];
                                                                                               });
                                                                                             },
                                                                                             child: Container(
                                                                                               height: 30,
-                                                                                              width:60,
+                                                                                              width: 60,
                                                                                               child: Stack(
                                                                                                 alignment: Alignment.center,
                                                                                                 children: [
                                                                                                   Positioned(
-
-                                                                                                    right:10,
+                                                                                                    right: 10,
                                                                                                     child: Container(
                                                                                                       width: 34,
                                                                                                       height: 20,
                                                                                                       decoration: BoxDecoration(
                                                                                                         borderRadius: BorderRadius.circular(10),
-                                                                                                        color:  data[3] ? utils.majorColor : Color(0x1e000000),
+                                                                                                        color: addedFiles[index - 1][3] ? utils.majorColor : Color(0x1e000000),
                                                                                                       ),
                                                                                                     ),
                                                                                                   ),
                                                                                                   AnimatedPositioned(
-                                                                                                      right: data[3] ? -0 : 28 ,
+                                                                                                      right: addedFiles[index - 1][3] ? -0 : 28,
                                                                                                       duration: Duration(milliseconds: 100),
                                                                                                       child: Container(
                                                                                                         width: 25,
@@ -589,7 +578,7 @@ class _AddDocumentState extends State<AddDocument> {
                                                                                                               offset: Offset(0, 3),
                                                                                                             ),
                                                                                                           ],
-                                                                                                          color: data[3] ? utils.majorColor : Color(0xffbdbdbd),
+                                                                                                          color: addedFiles[index - 1][3] ? utils.majorColor : Color(0xffbdbdbd),
                                                                                                         ),
                                                                                                       ))
                                                                                                 ],
@@ -597,7 +586,6 @@ class _AddDocumentState extends State<AddDocument> {
                                                                                             ),
                                                                                           ),
                                                                                         ),
-
                                                                                         Text(
                                                                                           "Two",
                                                                                           textAlign: TextAlign.center,
@@ -617,8 +605,7 @@ class _AddDocumentState extends State<AddDocument> {
                                                                       ),
                                                                       Align(
                                                                         alignment:
-                                                                            Alignment
-                                                                                .centerLeft,
+                                                                            Alignment.centerLeft,
                                                                         child:
                                                                             Padding(
                                                                           padding:
@@ -628,22 +615,17 @@ class _AddDocumentState extends State<AddDocument> {
                                                                             "Binding",
                                                                             style:
                                                                                 TextStyle(
-                                                                              color:
-                                                                                  Color(0xdd000000),
-                                                                              fontSize:
-                                                                                  width * 0.05,
-                                                                              fontFamily:
-                                                                                  utils.font,
-                                                                              fontWeight:
-                                                                                  FontWeight.w700,
+                                                                              color: Color(0xdd000000),
+                                                                              fontSize: width * 0.05,
+                                                                              fontFamily: utils.font,
+                                                                              fontWeight: FontWeight.w700,
                                                                             ),
                                                                           ),
                                                                         ),
                                                                       ),
                                                                       Padding(
                                                                         padding:
-                                                                            EdgeInsets
-                                                                                .only(
+                                                                            EdgeInsets.only(
                                                                           left: width *
                                                                               0.05,
                                                                         ),
@@ -715,12 +697,11 @@ class _AddDocumentState extends State<AddDocument> {
                                                                       ),
                                                                       Align(
                                                                         alignment:
-                                                                            FractionalOffset
-                                                                                .bottomCenter,
+                                                                            FractionalOffset.bottomCenter,
                                                                         child:
                                                                             Container(
-                                                                          width: width *
-                                                                              0.9,
+                                                                          width:
+                                                                              width * 0.9,
                                                                           height:
                                                                               36,
                                                                           decoration:
@@ -736,15 +717,14 @@ class _AddDocumentState extends State<AddDocument> {
                                                                                 BorderRadius.circular(4),
                                                                             child:
                                                                                 MaterialButton(
-                                                                              onPressed:
-                                                                                  () {
-                                                                                setState(() {
-                                                                                  addedFiles[index - 1] = data;
-                                                                                });
+                                                                              onPressed: () {
+                                                                                // setState(() {
+                                                                                addedFiles[index - 1] = data;
+                                                                                // });
+                                                                                print(addedFiles);
                                                                                 Navigator.pop(context);
                                                                               },
-                                                                              child:
-                                                                                  Center(
+                                                                              child: Center(
                                                                                 child: Text(
                                                                                   "OKAY",
                                                                                   style: TextStyle(

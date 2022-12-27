@@ -7,7 +7,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:printly/screens/userscreens/profile.dart';
 import 'package:printly/utils/utils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+import 'package:url_launcher/url_launcher.dart' as url_launcher;
 import 'adddocuments.dart';
 import 'menu.dart';
 import 'myorders.dart';
@@ -62,6 +62,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   prefs.setString("number", number);
                   prefs.setString("rollNumber", rollNumber);
                 }
+
                 if (snapshot.hasData) {
                   setprofile(snapshot.data!.get('number'),
                       snapshot.data!.get("rollNumber"));
@@ -282,58 +283,68 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                 ),
-                Container(
-                  width: width * 0.25,
-                  height: 100,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(4),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Color(0x1e000000),
-                        blurRadius: 3,
-                        offset: Offset(0, 1),
-                      ),
-                      BoxShadow(
-                        color: Color(0x23000000),
-                        blurRadius: 1,
-                        offset: Offset(0, 1),
-                      ),
-                      BoxShadow(
-                        color: Color(0x33000000),
-                        blurRadius: 1,
-                        offset: Offset(0, 2),
-                      ),
-                    ],
-                    color: Color(0xffcc7947),
-                  ),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(4),
-                    child: MaterialButton(
-                      onPressed: (() {}),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(4.0),
-                            child: SvgPicture.asset(
-                              "assets/images/contact.svg",
+                StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
+                    stream: FirebaseFirestore.instance
+                        .collection('contacts')
+                        .doc('contacts')
+                        .snapshots(),
+                    builder: (context, snapShot) {
+                      return Container(
+                        width: width * 0.25,
+                        height: 100,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(4),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Color(0x1e000000),
+                              blurRadius: 3,
+                              offset: Offset(0, 1),
+                            ),
+                            BoxShadow(
+                              color: Color(0x23000000),
+                              blurRadius: 1,
+                              offset: Offset(0, 1),
+                            ),
+                            BoxShadow(
+                              color: Color(0x33000000),
+                              blurRadius: 1,
+                              offset: Offset(0, 2),
+                            ),
+                          ],
+                          color: Color(0xffcc7947),
+                        ),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(4),
+                          child: MaterialButton(
+                            onPressed: (() {
+                              url_launcher.launchUrl(Uri.parse(
+                                  'tel:+91 ${snapShot.data!.get('developer')}'));
+                            }),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.all(4.0),
+                                  child: SvgPicture.asset(
+                                    "assets/images/contact.svg",
+                                  ),
+                                ),
+                                Text(
+                                  "CONTACT US",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: width * 0.03,
+                                    fontFamily: utils.font,
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                )
+                              ],
                             ),
                           ),
-                          Text(
-                            "CONTACT US",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: width * 0.03,
-                              fontFamily: utils.font,
-                              fontWeight: FontWeight.w700,
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
+                        ),
+                      );
+                    }),
               ],
             ),
           ),

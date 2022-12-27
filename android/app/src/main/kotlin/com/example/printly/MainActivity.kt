@@ -1,4 +1,4 @@
-package com.aplhax.printly
+package com.alphax.printly
 
 import io.flutter.embedding.android.FlutterActivity
 

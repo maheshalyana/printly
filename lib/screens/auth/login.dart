@@ -35,6 +35,7 @@ class _LoginScreenState extends State<LoginScreen> {
     // TODO: implement initState
     super.initState();
   }
+
   var otp = null;
   var id;
   bool login = false;
@@ -103,6 +104,7 @@ class _LoginScreenState extends State<LoginScreen> {
           login = true;
           id = verificationId;
         });
+        Navigator.pop(context);
 
         print(id);
 
@@ -200,7 +202,6 @@ class _LoginScreenState extends State<LoginScreen> {
                           keyboardType: TextInputType.number,
                           style: TextStyle(
                               fontSize: width * 0.03, color: Colors.black),
-
                           controller: phoneNumber,
                           validator: MultiValidator(
                             [
@@ -211,7 +212,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             ],
                           ),
                           decoration: InputDecoration(
-                            suffix: loading ? CircularProgressIndicator(color: utils.majorColor,) : login
+                            suffix: login
                                 ? Text(
                                     "✓",
                                     style: TextStyle(color: Colors.green),
@@ -252,7 +253,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             SizedBox(
-                              width:width*0.5,
+                              width: width * 0.5,
                               child: TextFormField(
                                 keyboardType: TextInputType.number,
                                 enabled: login,
@@ -260,7 +261,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                 validator: MultiValidator([
                                   RequiredValidator(
                                       errorText: "This field is required"),
-                                  MinLengthValidator(6, errorText: "enter valid otp")
+                                  MinLengthValidator(6,
+                                      errorText: "enter valid otp")
                                 ]),
                                 obscureText: isPassword,
                                 decoration: InputDecoration(
@@ -299,88 +301,108 @@ class _LoginScreenState extends State<LoginScreen> {
                                 ),
                               ),
                             ),
-                      MaterialButton(
-                        onPressed: (){
-                          if (phoneNumber.text.length==10){
-                            loading = true;
-                            registerUser(phoneNumber.text, context);
-                          }
-                        },
-                        child: AnimatedContainer(
-                          width: width * 0.2,
-                          height: 50,
-                          decoration: BoxDecoration(
-                            boxShadow: const [
-                              BoxShadow(
-                                color: Colors.black38,
-                                offset: Offset(0, 5),
-                                blurRadius: 5,
-                              ),
-                            ],
-                            borderRadius: BorderRadius.circular(4),
-                            color: utils.majorColor,
-                          ),
-                          duration: Duration(milliseconds: 1500),
-                          child: ClipRRect(
-                            child: Stack(children: [
-                              Positioned(
-                                  top: -4,
-                                  left: -3,
-                                  child: AnimatedContainer(
-                                    duration: const Duration(milliseconds: 2000),
-                                    height: size2,
-                                    width: size2,
-                                    decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      border: Border.all(
-                                        color: Color(0xffb26536),
-                                        width: 1,
-                                      ),
+                            MaterialButton(
+                              onPressed: () {
+                                if (phoneNumber.text.length == 10) {
+                                  loading = true;
+                                  showDialog(
+                                      context: context,
+                                      builder: (context) {
+                                        return Center(
+                                          child: Container(
+                                            width: 100,
+                                            height: 100,
+                                            color: Colors.white,
+                                            child: Center(
+                                              child: CircularProgressIndicator(
+                                                color: utils.majorColor,
+                                              ),
+                                            ),
+                                          ),
+                                        );
+                                      });
+                                  registerUser(phoneNumber.text, context);
+                                }
+                              },
+                              enableFeedback: !loading,
+                              child: AnimatedContainer(
+                                width: width * 0.2,
+                                height: 50,
+                                decoration: BoxDecoration(
+                                  boxShadow: const [
+                                    BoxShadow(
+                                      color: Colors.black38,
+                                      offset: Offset(0, 5),
+                                      blurRadius: 5,
                                     ),
-                                  )),
-                              Positioned(
-                                  top: -5,
-                                  right: 2,
-                                  child: AnimatedContainer(
-                                    duration: const Duration(milliseconds: 2000),
-                                    height: size2,
-                                    width: size2,
-                                    decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      border: Border.all(
-                                        color: Color(0xffb26536),
-                                        width: 1,
-                                      ),
-                                    ),
-                                  )),
-                              Positioned(
-                                  bottom: -5,
-                                  right: -2,
-                                  child: AnimatedContainer(
-                                    duration: const Duration(milliseconds: 2000),
-                                    height: size1,
-                                    width: size1,
-                                    decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      color: Color(0xffb26435),
-                                    ),
-                                  )),
-                              Align(
-                                alignment: Alignment.center,
-                                child: Text(
-                                  "GET OTP",
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 12,
-                                    fontFamily: utils.font,
-                                    fontWeight: FontWeight.w700,
-                                  ),
+                                  ],
+                                  borderRadius: BorderRadius.circular(4),
+                                  color: utils.majorColor,
                                 ),
-                              )
-                            ]),
-                          ),
-                        ),
-                      )
+                                duration: Duration(milliseconds: 1500),
+                                child: ClipRRect(
+                                  child: Stack(children: [
+                                    Positioned(
+                                        top: -4,
+                                        left: -3,
+                                        child: AnimatedContainer(
+                                          duration: const Duration(
+                                              milliseconds: 2000),
+                                          height: size2,
+                                          width: size2,
+                                          decoration: BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            border: Border.all(
+                                              color: Color(0xffb26536),
+                                              width: 1,
+                                            ),
+                                          ),
+                                        )),
+                                    Positioned(
+                                        top: -5,
+                                        right: 2,
+                                        child: AnimatedContainer(
+                                          duration: const Duration(
+                                              milliseconds: 2000),
+                                          height: size2,
+                                          width: size2,
+                                          decoration: BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            border: Border.all(
+                                              color: Color(0xffb26536),
+                                              width: 1,
+                                            ),
+                                          ),
+                                        )),
+                                    Positioned(
+                                        bottom: -5,
+                                        right: -2,
+                                        child: AnimatedContainer(
+                                          duration: const Duration(
+                                              milliseconds: 2000),
+                                          height: size1,
+                                          width: size1,
+                                          decoration: BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            color: Color(0xffb26435),
+                                          ),
+                                        )),
+                                    Align(
+                                      alignment: Alignment.center,
+                                      child: Text(
+                                        "GET OTP",
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 12,
+                                          fontFamily: utils.font,
+                                          fontWeight: FontWeight.w700,
+                                        ),
+                                      ),
+                                    )
+                                  ]),
+                                ),
+                              ),
+                            )
                           ],
                         ),
                       ),
@@ -460,22 +482,23 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                           ),
                           TextButton(
-                              onPressed: () {
-                                Navigator.pushAndRemoveUntil(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => SignUp()),
-                                    (route) => false);
-                              },
-                              child: Text(
-                                "Sign up",
-                                style: TextStyle(
-                                  color: Color(0xffcc7947),
-                                  fontSize: 14,
-                                  fontFamily: "Roboto",
-                                  fontWeight: FontWeight.w700,
-                                ),
-                              ),),
+                            onPressed: () {
+                              Navigator.pushAndRemoveUntil(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => SignUp()),
+                                  (route) => false);
+                            },
+                            child: Text(
+                              "Sign up",
+                              style: TextStyle(
+                                color: Color(0xffcc7947),
+                                fontSize: 14,
+                                fontFamily: "Roboto",
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                          ),
                         ],
                       )
                     ],

@@ -13,7 +13,6 @@ import 'package:form_field_validator/form_field_validator.dart';
 import '../../widgets/authbutton.dart';
 
 class SignUp extends StatefulWidget {
-
   const SignUp({super.key});
 
   @override
@@ -100,10 +99,11 @@ class _SignUpState extends State<SignUp> {
       },
       codeSent: (String verificationId, int? resendToken) async {
         setState(() {
+          loading = false;
           login = true;
           id = verificationId;
         });
-
+        Navigator.pop(context);
         print(id);
 
         // Sign the user in (or link) with the credential
@@ -281,7 +281,7 @@ class _SignUpState extends State<SignUp> {
                           ]),
                           keyboardType: TextInputType.number,
                           decoration: InputDecoration(
-                            suffix:   login
+                            suffix: login
                                 ? Text(
                                     "✓",
                                     style: TextStyle(color: Colors.green),
@@ -322,7 +322,7 @@ class _SignUpState extends State<SignUp> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             SizedBox(
-                              width:width*0.5,
+                              width: width * 0.5,
                               child: TextFormField(
                                 keyboardType: TextInputType.number,
                                 enabled: login,
@@ -330,7 +330,8 @@ class _SignUpState extends State<SignUp> {
                                 validator: MultiValidator([
                                   RequiredValidator(
                                       errorText: "This field is required"),
-                                  MinLengthValidator(6, errorText: "enter valid otp")
+                                  MinLengthValidator(6,
+                                      errorText: "enter valid otp")
                                 ]),
                                 obscureText: isPassword,
                                 decoration: InputDecoration(
@@ -370,11 +371,28 @@ class _SignUpState extends State<SignUp> {
                               ),
                             ),
                             MaterialButton(
-                              onPressed: (){
-                                if (phoneNumber.text.length==10){
-                                  setState((){
+                              enableFeedback: loading,
+                              onPressed: () {
+                                if (phoneNumber.text.length == 10) {
+                                  setState(() {
                                     loading = true;
                                   });
+                                  showDialog(
+                                      context: context,
+                                      builder: (context) {
+                                        return Center(
+                                          child: Container(
+                                            width: 100,
+                                            height: 100,
+                                            color: Colors.white,
+                                            child: Center(
+                                              child: CircularProgressIndicator(
+                                                color: utils.majorColor,
+                                              ),
+                                            ),
+                                          ),
+                                        );
+                                      });
                                   registerUser(phoneNumber.text, context);
                                 }
                               },
@@ -399,7 +417,8 @@ class _SignUpState extends State<SignUp> {
                                         top: -4,
                                         left: -3,
                                         child: AnimatedContainer(
-                                          duration: const Duration(milliseconds: 2000),
+                                          duration: const Duration(
+                                              milliseconds: 2000),
                                           height: size2,
                                           width: size2,
                                           decoration: BoxDecoration(
@@ -414,7 +433,8 @@ class _SignUpState extends State<SignUp> {
                                         top: -5,
                                         right: 2,
                                         child: AnimatedContainer(
-                                          duration: const Duration(milliseconds: 2000),
+                                          duration: const Duration(
+                                              milliseconds: 2000),
                                           height: size2,
                                           width: size2,
                                           decoration: BoxDecoration(
@@ -429,7 +449,8 @@ class _SignUpState extends State<SignUp> {
                                         bottom: -5,
                                         right: -2,
                                         child: AnimatedContainer(
-                                          duration: const Duration(milliseconds: 2000),
+                                          duration: const Duration(
+                                              milliseconds: 2000),
                                           height: size1,
                                           width: size1,
                                           decoration: BoxDecoration(

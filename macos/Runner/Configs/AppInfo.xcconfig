@@ -8,7 +8,7 @@
 PRODUCT_NAME = printly
 
 // The application's bundle identifier
-PRODUCT_BUNDLE_IDENTIFIER = com.aplhax.printly
+PRODUCT_BUNDLE_IDENTIFIER = com.alphax.printly
 
 // The copyright displayed in application information
 PRODUCT_COPYRIGHT = Copyright © 2022 com.aplhax. All rights reserved.
