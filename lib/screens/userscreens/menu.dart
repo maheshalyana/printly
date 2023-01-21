@@ -158,11 +158,13 @@ class _MenuState extends State<Menu> {
                               ),
                               TextButton(
                                 onPressed: (() {
-                                  Navigator.pushAndRemoveUntil(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => AboutUs()),
-                                      (route) => true);
+                                  url_launcher.launchUrl(Uri.parse(
+                                      'https://thealphax.in/index.php/about-us/'));
+                                  // Navigator.pushAndRemoveUntil(
+                                  //     context,
+                                  //     MaterialPageRoute(
+                                  //         builder: (context) => AboutUs()),
+                                  //     (route) => true);
                                 }),
                                 child: Text(
                                   "About",

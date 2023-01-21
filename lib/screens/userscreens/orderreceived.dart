@@ -56,7 +56,7 @@ class _OrderRecievedState extends State<OrderRecieved> {
                                 child: SizedBox(
                                   width: width * 0.8,
                                   child: Text(
-                                    "Our Bear is printing your docs...See you at the store at 3.00pm, 29th january 2022",
+                                    "Our Bear is printing your docs...See you at the store on ${DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day + 1).day}/${DateTime.now().month}/${DateTime.now().year}",
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
                                       color: Colors.black,

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:pdf_render/pdf_render_widgets.dart';
 import 'package:printly/utils/utils.dart';
 
-
 class OrdersTile extends StatefulWidget {
   OrdersTile({
     super.key,
@@ -12,7 +11,6 @@ class OrdersTile extends StatefulWidget {
     required this.color,
     required this.file,
     required this.price,
-
   });
   String name;
   String price;
@@ -215,7 +213,7 @@ class _OrderTileState extends State<OrderTile> {
                         Row(
                           children: [
                             Text(
-                              "$pageCount pages, ",
+                              "${details[1]} pages, ",
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 fontSize: width * 0.03,
@@ -250,7 +248,7 @@ class _OrderTileState extends State<OrderTile> {
                         Align(
                           alignment: Alignment.centerRight,
                           child: Text(
-                            "Rs 105.00",
+                            "Rs ${details[4]}",
                             style: TextStyle(
                               color: Colors.black,
                               fontSize: width * 0.045,
