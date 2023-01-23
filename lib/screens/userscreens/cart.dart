@@ -140,13 +140,13 @@ class _CartScreenState extends State<CartScreen> with WidgetsBindingObserver {
           "rollNumber": friend ? rollnumber.text : rollNumber,
         });
       });
-      Navigator.pop(context);
-      Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(
-              builder: (context) => OrderRecieved(documents: details)),
-          (route) => false);
     }
+    Navigator.pop(context);
+    Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(
+            builder: (context) => OrderRecieved(documents: details)),
+        (route) => false);
   }
 
   void _handlePaymentError(PaymentFailureResponse response) {
